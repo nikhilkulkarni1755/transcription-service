@@ -9,7 +9,7 @@ A lightweight microservice system that transcribes YouTube videos using AI. Simp
 - **Bandwidth efficient** - Only downloads audio stream, not video pixels
 - **Async processing** - Submit videos and check status later
 - **Docker-based** - Easy deployment with docker-compose
-- **AI-powered** - Uses OpenAI's Whisper model via HuggingFace Transformers
+- **AI-powered** - Uses Whisper model via HuggingFace Transformers (100% free)
 
 ## Architecture
 
@@ -65,6 +65,7 @@ Content-Type: application/json
 ```
 
 **Example (PowerShell):**
+
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:8000/api/v1/transcribe" `
   -Method Post `
@@ -73,6 +74,7 @@ Invoke-RestMethod -Uri "http://localhost:8000/api/v1/transcribe" `
 ```
 
 **Example (curl):**
+
 ```bash
 curl -X POST "http://localhost:8000/api/v1/transcribe" \
   -H "Content-Type: application/json" \
@@ -80,6 +82,7 @@ curl -X POST "http://localhost:8000/api/v1/transcribe" \
 ```
 
 **Response:**
+
 ```json
 {
   "video_url": "https://www.youtube.com/watch?v=VIDEO_ID",
@@ -98,12 +101,14 @@ GET http://localhost:8000/api/v1/transcription/{video_url}
 ```
 
 **Example:**
+
 ```bash
 # URL must be encoded
 curl "http://localhost:8000/api/v1/transcription/https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ"
 ```
 
 **Response (when completed):**
+
 ```json
 {
   "video_url": "https://www.youtube.com/watch?v=VIDEO_ID",
@@ -123,12 +128,12 @@ GET http://localhost:8000/health
 
 ## Status States
 
-| Status | Description |
-|--------|-------------|
-| `pending` | Request submitted, waiting to start |
+| Status         | Description                                     |
+| -------------- | ----------------------------------------------- |
+| `pending`      | Request submitted, waiting to start             |
 | `transcribing` | Streaming audio and running transcription model |
-| `completed` | Transcription finished successfully |
-| `failed` | An error occurred (check `error_message` field) |
+| `completed`    | Transcription finished successfully             |
+| `failed`       | An error occurred (check `error_message` field) |
 
 ## Project Structure
 
@@ -193,7 +198,7 @@ Environment variables can be set in `docker-compose.yml`:
 - Only audio is downloaded from videos, saving significant bandwidth
 - The database (`transcriptions.db`) only stores transcription text, not media files
 - For production, consider using PostgreSQL instead of SQLite
-- For better transcription quality, modify the transcriber to use `openai/whisper-large-v3` model
+- For better transcription quality, modify the transcriber to use `openai/whisper-large-v3` (still free via HuggingFace)
 
 ## Troubleshooting
 
@@ -221,3 +226,7 @@ docker-compose logs -f
 ## License
 
 MIT
+
+## Attempt
+
+This is an attempt to build the fastest transcription machine in the world. looking to use streaming to try and get a less that 5 second completion time for shorter vids.
